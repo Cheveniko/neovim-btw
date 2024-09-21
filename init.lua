@@ -518,7 +518,7 @@ require('lazy').setup({
         intelephense = {
           settings = {
             intelephense = {
-              stubs = { 'wordpress', 'woocommerce', 'acf-pro' },
+              stubs = { 'wordpress', 'woocommerce', 'acf-pro-stubs' },
             },
           },
         },
@@ -558,9 +558,6 @@ require('lazy').setup({
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
-            if server_name == 'tsserver' then
-              server_name = 'ts_ls'
-            end
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
