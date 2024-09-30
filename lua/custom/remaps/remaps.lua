@@ -5,7 +5,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
---Equivalent to alt + up or down in vs code
+--Equivalent to option + up or down in vsc*de
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
@@ -20,7 +20,7 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 -- Center screen and keep cursor on center
 vim.keymap.set('n', 'G', 'Gzz')
 
--- Delete highlighted buffer on to the void and paste
+-- Delete highlighted text on to the void and paste
 vim.keymap.set('x', '<leader>p', '"_dP')
 
 -- Copy to system clipboard
@@ -28,7 +28,7 @@ vim.keymap.set('n', '<leader>y', '"+y')
 vim.keymap.set('v', '<leader>y', '"+y')
 vim.keymap.set('n', '<leader>Y', '"+Y')
 
--- Delete highlighted buffer on to the void
+-- Delete highlighted text on to the void
 vim.keymap.set('n', '<leader>d', '"_d')
 vim.keymap.set('v', '<leader>d', '"_d')
 
@@ -36,8 +36,8 @@ vim.keymap.set('v', '<leader>d', '"_d')
 vim.api.nvim_create_user_command('VGit', 'vertical Git', { desc = 'Open Git vertically' })
 vim.keymap.set('n', '<leader>gs', vim.cmd.VGit, { desc = 'Git [S]tatus' })
 
--- Jump to previous file
-vim.keymap.set('n', '<C-g>', '<C-^>')
+-- Jump to previous buffer
+vim.keymap.set('n', '<C-g>', '<C-^>', { desc = '[G]o to previous buffer' })
 
 -- Move tabs position
 vim.keymap.set('n', '<leader><Left>', '<cmd>tabm -1<CR>')
@@ -68,3 +68,7 @@ vim.keymap.set('n', '<C-c>', '<cmd>tabclose<CR>')
 
 -- Gitsigns
 vim.keymap.set('n', '<leader>gh', '<cmd>Gitsigns preview_hunk_inline <CR>', { desc = 'Git [H]unk' })
+
+-- Reselect yanked text
+vim.keymap.set('n', 'gl', '`[`]', { desc = 'Go to [L]ast character of yanked text' })
+vim.keymap.set('n', 'gp', '`[v`]', { desc = 'Reselect [P]revious yanked text' })

@@ -518,7 +518,7 @@ require('lazy').setup({
         intelephense = {
           settings = {
             intelephense = {
-              stubs = { 'wordpress', 'woocommerce', 'acf-pro-stubs' },
+              stubs = { 'wordpress', 'wordpress-globals', 'woocommerce', 'acf-pro-stubs' },
             },
           },
         },
@@ -601,6 +601,7 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         astro = { 'prettierd', 'prettier', stop_after_first = true },
+        cs = { 'csharpier' },
         css = { 'prettierd', 'prettier', stop_after_first = true },
         graphql = { 'prettierd', 'prettier', stop_after_first = true },
         html = { 'prettierd', 'prettier', stop_after_first = true },
