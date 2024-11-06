@@ -50,12 +50,17 @@ vim.keymap.set('n', 'M', '<Nop>')
 vim.keymap.set('v', 'L', '<Nop>')
 vim.keymap.set('v', 'H', '<Nop>')
 vim.keymap.set('v', 'M', '<Nop>')
+vim.keymap.set('n', '<C-m>', '<Nop>')
+vim.keymap.set('v', '<C-m>', '<Nop>')
 
 -- Undo tree
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo tree' })
 
 -- Markdown Preview
 vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreview, { desc = '[M]arkdown [P]review' })
+
+-- LSP
+vim.keymap.set('n', '<leader>lr', vim.cmd.LspRestart, { desc = '[L]SP [R]estart' })
 
 -- Increase and decrease window size
 vim.keymap.set('n', '>', '<C-w>>', { desc = 'Increase window width' })
@@ -70,5 +75,6 @@ vim.keymap.set('n', '<C-c>', '<cmd>tabclose<CR>')
 vim.keymap.set('n', '<leader>gh', '<cmd>Gitsigns preview_hunk_inline <CR>', { desc = 'Git [H]unk' })
 
 -- Reselect yanked text
-vim.keymap.set('n', 'gl', '`[`]', { desc = 'Go to [L]ast character of yanked text' })
-vim.keymap.set('n', 'gp', '`[v`]', { desc = 'Reselect [P]revious yanked text' })
+vim.keymap.set('n', 'gl', '`[`]zz', { desc = 'Go to [L]ast character of yanked text' })
+vim.keymap.set('v', 'gl', '`[`]zz', { desc = 'Select to [L]ast character of yanked text' })
+vim.keymap.set('n', 'gv', '`[v`]zz', { desc = 'Reselect [P]revious yanked text' })
