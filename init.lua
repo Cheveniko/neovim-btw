@@ -81,6 +81,11 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to eep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- for denols
+vim.g.markdown_fenced_languages = {
+  'ts=typescript',
+}
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -364,35 +369,6 @@ require('lazy').setup({
       { 'Bilal2453/luvit-meta', lazy = true },
     },
     config = function()
-      -- Brief aside: **What is LSP?**
-      --
-      -- LSP is an initialism you've probably heard, but might not understand what it is.
-      --
-      -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-      -- and language tooling communicate in a standardized fashion.
-      --
-      -- In general, you have a "server" which is some tool built to understand a particular
-      -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-      -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-      -- processes that communicate with some "client" - in this case, Neovim!
-      --
-      -- LSP provides Neovim with features like:
-      --  - Go to definition
-      --  - Find references
-      --  - Autocompletion
-      --  - Symbol Search
-      --  - and more!
-      --
-      -- Thus, Language Servers are external tools that must be installed separately from
-      -- Neovim. This is where `mason` and related plugins come into play.
-      --
-      -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-      -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
-      --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -483,6 +459,17 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
           end
+          -- -- svelte
+          -- if client and client.name == 'svelte' then
+          --   vim.api.nvim_create_autocmd('BufWritePost', {
+          --     pattern = { '*.js', '*.ts' },
+          --     group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
+          --     callback = function(ctx)
+          --       -- Here use ctx.match instead of ctx.file
+          --       client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+          --     end,
+          --   })
+          -- end
         end,
       })
 
@@ -513,15 +500,28 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {
+          root_dir = require('lspconfig').util.root_pattern 'package.json',
+          single_file_support = false,
+        },
+
+        denols = {
+          root_dir = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc'),
+        },
         --
         intelephense = {
           settings = {
             intelephense = {
-              stubs = { 'wordpress', 'wordpress-globals', 'woocommerce', 'acf-pro-stubs' },
+              stubs = { 'wordpress', 'wordpress-globals', 'woocommerce', 'acf-pro', 'acf-pro-stubs' },
             },
           },
         },
+
+        -- svelte = {
+        --   setup = {
+        --     filetypes = { 'typescript', 'javascript', 'svelte', 'html', 'css' },
+        --   },
+        -- },
 
         lua_ls = {
           -- cmd = {...},
@@ -563,6 +563,19 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
+            if server_name == 'svelte' then
+              require('lspconfig').svelte.setup {
+                on_attach = function(client)
+                  vim.api.nvim_create_autocmd('BufWritePost', {
+                    pattern = { '*.js', '*.ts' },
+                    callback = function(ctx)
+                      client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+                    end,
+                  })
+                end,
+              }
+            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -584,12 +597,12 @@ require('lazy').setup({
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = {}
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -610,8 +623,8 @@ require('lazy').setup({
         json = { 'prettierd', 'prettier', stop_after_first = true },
         jsonc = { 'prettierd', 'prettier', stop_after_first = true },
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
-        python = { 'black' },
-        sql = { 'sql-formatter' },
+        -- python = { 'black' },
+        sql = { 'sqlfmt' },
         svelte = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
