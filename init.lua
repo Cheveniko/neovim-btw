@@ -81,6 +81,13 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to eep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Tab size
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+
 -- for denols
 vim.g.markdown_fenced_languages = {
   'ts=typescript',
@@ -508,7 +515,7 @@ require('lazy').setup({
         denols = {
           root_dir = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc'),
         },
-        --
+
         intelephense = {
           settings = {
             intelephense = {
@@ -517,11 +524,15 @@ require('lazy').setup({
           },
         },
 
-        -- svelte = {
-        --   setup = {
-        --     filetypes = { 'typescript', 'javascript', 'svelte', 'html', 'css' },
-        --   },
-        -- },
+        svelte = {
+          capabilities = {
+            workspace = {
+              didChangeWatchedFiles = {
+                dynamicRegistration = true,
+              },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -563,19 +574,6 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-
-            if server_name == 'svelte' then
-              require('lspconfig').svelte.setup {
-                on_attach = function(client)
-                  vim.api.nvim_create_autocmd('BufWritePost', {
-                    pattern = { '*.js', '*.ts' },
-                    callback = function(ctx)
-                      client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
-                    end,
-                  })
-                end,
-              }
-            end
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -625,6 +623,8 @@ require('lazy').setup({
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
         -- python = { 'black' },
         sql = { 'sqlfmt' },
+        mysql = { 'sqlfmt' },
+        plsql = { 'sqlfmt' },
         svelte = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
@@ -747,7 +747,7 @@ require('lazy').setup({
         },
       }
       -- Setup up vim-dadbod
-      cmp.setup.filetype({ 'sql' }, {
+      cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
         sources = {
           { name = 'vim-dadbod-completion' },
           { name = 'buffer' },
@@ -780,6 +780,7 @@ require('lazy').setup({
           fidget = true,
           which_key = true,
           mason = true,
+          dadbod_ui = true,
         },
       }
     end,
@@ -863,6 +864,15 @@ require('lazy').setup({
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
+        disable = {
+          'csv',
+          'tsv',
+          'csv_semicolon',
+          'csv_whitespace',
+          'csv_pipe',
+          'rfc_csv',
+          'rfc_semicolon',
+        },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
