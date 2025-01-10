@@ -1,4 +1,4 @@
---Equivalent to option + up or down in vsc*de
+-- Equivalent to option + up or down in vsc*de
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
@@ -10,7 +10,7 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
--- Center screen and keep cursor on center
+-- Go to last line and center screen
 vim.keymap.set('n', 'G', 'Gzz')
 
 -- Delete highlighted text on to the void and paste
@@ -55,6 +55,9 @@ vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreview, { desc = '[M]arkdown 
 -- LSP
 vim.keymap.set('n', '<leader>lr', vim.cmd.LspRestart, { desc = '[L]SP [R]estart' })
 
+-- Avante
+vim.keymap.set('n', '<leader>ae', 'v<cmd>AvanteEdit<CR>', { desc = 'avante: edit' })
+
 -- Increase and decrease window size
 vim.keymap.set('n', '>', '<C-w>>', { desc = 'Increase window width' })
 vim.keymap.set('n', '<lt>', '<C-w><lt>', { desc = 'Decrease window width' })
@@ -70,4 +73,4 @@ vim.keymap.set('n', '<leader>gh', '<cmd>Gitsigns preview_hunk_inline <CR>', { de
 -- Reselect yanked text
 vim.keymap.set('n', 'gl', '`[`]zz', { desc = 'Go to [L]ast character of yanked text' })
 vim.keymap.set('v', 'gl', '`[`]zz', { desc = 'Select to [L]ast character of yanked text' })
-vim.keymap.set('n', 'gv', '`[v`]zz', { desc = 'Reselect [P]revious yanked text' })
+vim.keymap.set('n', 'gv', '`[v`]zz', { desc = '[V]isual select previous yanked text' })
