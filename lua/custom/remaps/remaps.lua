@@ -30,7 +30,7 @@ vim.api.nvim_create_user_command('VGit', 'vertical Git', { desc = 'Open Git vert
 vim.keymap.set('n', '<leader>gs', vim.cmd.VGit, { desc = 'Git [S]tatus' })
 
 -- Jump to previous buffer
-vim.keymap.set('n', '<C-g>', '<C-^>', { desc = '[G]o to previous buffer' })
+vim.keymap.set('n', '<C-g>', '<C-^>zz', { desc = '[G]o to previous buffer' })
 
 -- Move tabs position
 vim.keymap.set('n', '<leader><Left>', '<cmd>tabm -1<CR>')
@@ -73,4 +73,7 @@ vim.keymap.set('n', '<leader>gh', '<cmd>Gitsigns preview_hunk_inline <CR>', { de
 -- Reselect yanked text
 vim.keymap.set('n', 'gl', '`[`]zz', { desc = 'Go to [L]ast character of yanked text' })
 vim.keymap.set('v', 'gl', '`[`]zz', { desc = 'Select to [L]ast character of yanked text' })
-vim.keymap.set('n', 'gv', '`[v`]zz', { desc = '[V]isual select previous yanked text' })
+
+-- Indent and unindent in visual mode
+vim.keymap.set('v', '<Tab>', '>gv', { desc = 'Indent selection' })
+vim.keymap.set('v', '<S-Tab>', '<lt>gv', { desc = 'Unindent selection' })
