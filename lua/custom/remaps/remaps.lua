@@ -16,10 +16,15 @@ vim.keymap.set('n', 'G', 'Gzz')
 -- Delete highlighted text on to the void and paste
 vim.keymap.set('x', '<leader>p', '"_dP')
 
+-- Copy to end of line
+vim.keymap.set('n', 'Y', 'y$')
+vim.keymap.set('v', 'Y', '$y')
+
 -- Copy to system clipboard
 vim.keymap.set('n', '<leader>y', '"+y')
 vim.keymap.set('v', '<leader>y', '"+y')
-vim.keymap.set('n', '<leader>Y', '"+Y')
+vim.keymap.set('n', '<leader>Y', '"+y$')
+vim.keymap.set('v', '<leader>Y', '"+$y')
 
 -- Delete highlighted text on to the void
 vim.keymap.set('n', '<leader>d', '"_d')
@@ -69,6 +74,8 @@ vim.keymap.set('n', '<C-c>', '<cmd>tabclose<CR>')
 
 -- Gitsigns
 vim.keymap.set('n', '<leader>gh', '<cmd>Gitsigns preview_hunk_inline <CR>', { desc = 'Git [H]unk' })
+vim.keymap.set('n', '<leader>gn', '<cmd>Gitsigns next_hunk <CR>', { desc = 'Git [N]ext [H]unk' })
+vim.keymap.set('n', '<leader>gp', '<cmd>Gitsigns prev_hunk <CR>', { desc = 'Git [P]revious [H]unk' })
 
 -- Reselect yanked text
 vim.keymap.set('n', 'gl', '`[`]zz', { desc = 'Go to [L]ast character of yanked text' })
