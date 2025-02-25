@@ -103,6 +103,23 @@ vim.g.markdown_fenced_languages = {
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Save and load created buffer folds
+local save_folds_group = vim.api.nvim_create_augroup('save-folds', { clear = true })
+
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  desc = 'Save existing buffer folds',
+  group = save_folds_group,
+  pattern = '*.*',
+  command = 'mkview',
+})
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  desc = 'Load existing buffer folds',
+  group = save_folds_group,
+  pattern = '*.*',
+  command = 'silent! loadview',
+})
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
