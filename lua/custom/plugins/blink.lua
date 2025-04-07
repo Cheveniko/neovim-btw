@@ -4,23 +4,19 @@ return {
 
   -- use a release tag to download pre-built binaries
   version = '1.*',
-  -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-  -- build = 'cargo build --release',
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
     keymap = { preset = 'default' },
 
-    -- appearance = {
-    --   -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-    --   -- Adjusts spacing to ensure icons are aligned
-    --   nerd_font_variant = 'mono',
-    -- },
-
     -- (Default) Only show the documentation popup when manually triggered
     -- completion = { documentation = { auto_show = false } },
     completion = { documentation = { auto_show = true } },
+
+    enabled = function()
+      return not vim.tbl_contains({ 'gitcommit' }, vim.bo.filetype)
+    end,
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
