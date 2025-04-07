@@ -15,7 +15,7 @@ return {
     completion = { documentation = { auto_show = true } },
 
     enabled = function()
-      return not vim.tbl_contains({ 'gitcommit' }, vim.bo.filetype)
+      return not vim.tbl_contains({ 'gitcommit', 'DressingInput', 'AvanteInput' }, vim.bo.filetype)
     end,
 
     -- Default list of enabled providers defined so that you can extend it

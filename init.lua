@@ -108,7 +108,7 @@ vim.diagnostic.config {
     },
   } or {},
   virtual_text = {
-    source = true,
+    source = 'if_many',
     spacing = 2,
   },
 }
