@@ -24,7 +24,7 @@ return {
     -- refer to the configuration section below
 
     -- image = { enabled = true },
-    bigfile = { enabled = true },
+    bigfile = { size = 50 * 1024 * 1024 }, -- 10MB
     quickfile = { enabled = true },
     -- dashboard = { enabled = true },
     -- explorer = { enabled = true },
