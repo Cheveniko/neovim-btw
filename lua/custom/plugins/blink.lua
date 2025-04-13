@@ -9,11 +9,17 @@ return {
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
-    keymap = { preset = 'default' },
+    keymap = {
+      preset = 'default',
+      ['<Tab>'] = { 'select_and_accept', 'snippet_forward', 'fallback' },
+    },
 
     -- (Default) Only show the documentation popup when manually triggered
     -- completion = { documentation = { auto_show = false } },
-    completion = { documentation = { auto_show = true } },
+    completion = {
+      documentation = { auto_show = true },
+      accept = { auto_brackets = { enabled = true } },
+    },
 
     enabled = function()
       return not vim.tbl_contains({ 'gitcommit', 'DressingInput', 'AvanteInput' }, vim.bo.filetype)
