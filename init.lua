@@ -650,7 +650,7 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         astro = { 'prettierd', 'prettier', stop_after_first = true },
-        cs = { 'csharpier' },
+        -- cs = { 'csharpier' },
         css = { 'prettierd', 'prettier', stop_after_first = true },
         graphql = { 'prettierd', 'prettier', stop_after_first = true },
         html = { 'prettierd', 'prettier', stop_after_first = true },
@@ -659,7 +659,6 @@ require('lazy').setup({
         json = { 'prettierd', 'prettier', stop_after_first = true },
         jsonc = { 'prettierd', 'prettier', stop_after_first = true },
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
-        -- python = { 'black' },
         sql = { 'sqlfmt' },
         mysql = { 'sqlfmt' },
         plsql = { 'sqlfmt' },
@@ -755,21 +754,13 @@ require('lazy').setup({
     opts = {
       autopairs = { enable = true },
       ensure_installed = {
-        'bash',
-        'c',
         'diff',
-        'html',
         'lua',
         'luadoc',
-        'markdown',
-        'markdown_inline',
         'query',
-        'vim',
-        'vimdoc',
         'javascript',
         'typescript',
         'tsx',
-        'svelte',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
