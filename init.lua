@@ -186,6 +186,10 @@ if not vim.uv.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- vim.lsp.config.denols = {
+--   root_markers = { 'deno.json', 'deno.jsonc' },
+-- }
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -546,13 +550,14 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {
-          root_dir = require('lspconfig').util.root_pattern 'package.json',
-          single_file_support = false,
+          workspace_required = false,
+          -- root_markers = { 'package.json', 'tsconfig.json' },
         },
 
-        denols = {
-          root_dir = require('lspconfig').util.root_pattern('deno.json', 'deno.jsonc'),
-        },
+        -- denols = {
+        --   workspace_required = true,
+        --   root_markers = { 'deno.json', 'deno.jsonc' },
+        -- },
 
         intelephense = {
           settings = {
@@ -605,6 +610,8 @@ require('lazy').setup({
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
+        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
