@@ -27,6 +27,8 @@ return {
     { 'Bilal2453/luvit-meta', lazy = true },
   },
   config = function()
+    local java21_home = '/opt/homebrew/opt/openjdk@21'
+
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('config-lsp-attach', { clear = true }),
       callback = function(event)
@@ -78,17 +80,37 @@ return {
     })
 
     local servers = {
+      'angularls',
+      'astro',
+      'cssls',
+      'docker_compose_language_service',
+      'dockerls',
+      'gopls',
+      'html',
+      'jsonls',
+      'kotlin_language_server',
+      'lua_ls',
+      'mdx_analyzer',
+      'pylsp',
+      'svelte',
+      'tailwindcss',
       'ts_ls',
       'denols',
       'intelephense',
-      'svelte',
-      'tailwindcss',
-      'lua_ls',
     }
 
     vim.lsp.config('*', {
       capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('blink.cmp').get_lsp_capabilities()),
     })
+
+    if vim.fn.isdirectory(java21_home) == 1 then
+      vim.lsp.config('kotlin_language_server', {
+        cmd_env = {
+          JAVA_HOME = java21_home,
+          PATH = java21_home .. '/bin:' .. vim.env.PATH,
+        },
+      })
+    end
 
     for _, server_name in ipairs(servers) do
       vim.lsp.enable(server_name)

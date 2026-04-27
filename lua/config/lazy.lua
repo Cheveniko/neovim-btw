@@ -129,6 +129,7 @@ require('lazy').setup({
         javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         json = { 'prettierd', 'prettier', stop_after_first = true },
         jsonc = { 'prettierd', 'prettier', stop_after_first = true },
+        kotlin = { 'ktfmt' },
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
         sql = { 'sqlfmt' },
         mysql = { 'sqlfmt' },
