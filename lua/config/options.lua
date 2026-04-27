@@ -23,7 +23,7 @@ vim.opt.breakindent = true
 -- Save undo history
 vim.opt.undofile = true
 
--- For avante.nvim
+-- For opencode.nvim
 vim.opt.laststatus = 3
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
