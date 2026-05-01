@@ -103,6 +103,8 @@ return {
       capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('blink.cmp').get_lsp_capabilities()),
     })
 
+    vim.lsp.document_color.enable(true, nil, { style = '■ ' })
+
     if vim.fn.isdirectory(java21_home) == 1 then
       vim.lsp.config('kotlin_language_server', {
         cmd_env = {
