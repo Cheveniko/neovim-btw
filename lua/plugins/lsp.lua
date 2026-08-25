@@ -99,8 +99,21 @@ return {
       'intelephense',
     }
 
+    local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('blink.cmp').get_lsp_capabilities(), {
+      workspace = {
+        fileOperations = {
+          didCreate = true,
+          willCreate = true,
+          didRename = true,
+          willRename = true,
+          didDelete = true,
+          willDelete = true,
+        },
+      },
+    })
+
     vim.lsp.config('*', {
-      capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('blink.cmp').get_lsp_capabilities()),
+      capabilities = capabilities,
     })
 
     vim.lsp.document_color.enable(true, nil, { style = '■ ' })
